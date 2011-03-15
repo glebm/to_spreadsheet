@@ -1,0 +1,10 @@
+source 'http://rubygems.org'
+
+gem 'rails', '> 3'
+gem 'sqlite3'
+
+gem 'to_spreadsheet', :path => '../..'
+
+group :test do
+  gem 'mocha'
+end
