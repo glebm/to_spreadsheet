@@ -1,0 +1,47 @@
+to_spreadsheet is a gem that lets you render xls from your existing haml/erb views from Rails (>= 3.0).
+
+= Installation
+
+Add it to your Gemfile:
+
+  gem 'to_spreadsheet'
+
+= Usage
+
+In your controller:
+
+  class MyThingiesController < ApplicationController
+    respond_to :xls, :html
+
+    def index
+      @my_thingies = MyThingie.all
+      respond_with(@my_thingies)
+    end
+  end
+
+In your view partial:
+
+  # _my_thingie.haml
+  %table
+    %caption My thingies
+    %thead
+      %tr
+        %td ID
+        %td Name
+    %tbody
+      - my_thingies.each do |thingie|
+        %tr
+          %td.number= thingie.id
+          %td= thingie.name
+    %tfoot
+      %tr
+        %td(colspan="2") #{my_thingies.length}
+
+In your index.xls.haml:
+
+  = render 'my_thingies', :my_thingies => @my_thingies
+
+In your index.html.haml:
+
+  = link_to 'Download XLS', my_thingies_url(:format => :xls)
+  = render 'my_thingies', :my_thingies => @my_thingies
