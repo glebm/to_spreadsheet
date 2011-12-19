@@ -9,7 +9,7 @@ class CreateContacts < ActiveRecord::Migration
     end
 
     def down
-      drop_table :contacts      
+      drop_table :contacts
     end
   end
 end
