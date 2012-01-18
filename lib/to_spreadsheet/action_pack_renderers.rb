@@ -1,3 +1,4 @@
+require 'active_support'
 require 'action_controller/metal/renderers'
 require 'action_controller/metal/responder'
 

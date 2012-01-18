@@ -5,12 +5,11 @@ module ToSpreadsheet
 
     def to_io(html)
       spreadsheet = Spreadsheet::Workbook.new
-      Nokogiri::XML::Document.parse(html).xpath('/table').each_with_index do |xml_table, i|
+      Nokogiri::HTML::Document.parse(html).css('table').each_with_index do |xml_table, i|
         sheet = spreadsheet.create_worksheet(:name => xml_table.css('caption').inner_text.presence || "Sheet #{i + 1}")
         xml_table.css('tr').each_with_index do |row_node, row|
           row_node.css('th,td').each_with_index do |col_node, col|
-            text = col_node.inner_text
-            sheet[row,col] = text
+            sheet[row, col] = typed_node_val(col_node)
           end
         end
       end
@@ -18,6 +17,24 @@ module ToSpreadsheet
       spreadsheet.write(io)
       io.rewind
       io
+    end
+
+    private
+
+    def typed_node_val(node)
+      val = node.inner_text
+      case node[:class]
+        when /num|int/
+          val.to_i
+        when /datetime/
+          DateTime.parse(val)
+        when /date/
+          Date.parse(val)
+        when /time/
+          Time.parse(val)
+        else
+          val
+      end
     end
   end
 end

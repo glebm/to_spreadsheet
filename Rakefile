@@ -7,15 +7,7 @@ rescue LoadError
 end
 
 require 'rake'
-require 'rake/rdoctask'
+require 'rdoc/task'
+require 'rspec/core/rake_task'
 
-require 'rake/testtask'
-
-Rake::TestTask.new(:test) do |t|
-  Dir.chdir('test/test_app')
-  Kernel.exec('rake db:test:prepare')
-  Kernel.exec('rake test')
-  Dir.chdir('../..')
-end
-
-task :default => :test
+RSpec::Core::RakeTask.new(:spec)
