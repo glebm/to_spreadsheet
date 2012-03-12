@@ -12,12 +12,21 @@ describe ToSpreadsheet::XLS do
   end
 
   it 'supports num format' do
-    spreadsheet.worksheet(0)[1, 1].class.should be(Fixnum)
+    spreadsheet.worksheet(0)[1, 1].should == 20
   end
 
   it 'supports date format' do
     spreadsheet.worksheet(0)[1, 2].class.should be(Date)
   end
+
+  # This is for final manual test
+  # The test spreadsheet will be saved to /tmp/spreadsheet.xls
+  it 'writes to disk' do
+    f = File.open('/tmp/spreadsheet.xls', 'wb')
+    Spreadsheet.writer(f).write_workbook(spreadsheet, f)
+    f.close
+  end
+
 end
 
 TEST_HAML = <<-HAML
