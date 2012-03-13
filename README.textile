@@ -4,7 +4,7 @@ h2. Installation
 
 Add it to your Gemfile:
 
-  gem 'to_spreadsheet'
+bc. gem 'to_spreadsheet'
 
 h2. Usage
 
