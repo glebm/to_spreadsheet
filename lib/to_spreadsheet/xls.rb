@@ -24,7 +24,7 @@ module ToSpreadsheet
     def typed_node_val(node)
       val = node.inner_text
       case node[:class]
-        when /float/
+        when /decimal|float/
           val.to_f
         when /num|int/
           val.to_i

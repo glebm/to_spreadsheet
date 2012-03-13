@@ -15,6 +15,10 @@ describe ToSpreadsheet::XLS do
     spreadsheet.worksheet(0)[1, 1].should == 20
   end
 
+  it 'support float format' do
+    spreadsheet.worksheet(1)[1, 1].class.should be(Float)
+  end
+
   it 'supports date format' do
     spreadsheet.worksheet(0)[1, 2].class.should be(Date)
   end
@@ -58,7 +62,7 @@ TEST_HAML = <<-HAML
   %tbody
     %tr
       %td Alice
-      %td.num 19
+      %td.float 19.5
       %td.date 10/05/1991
 
 HAML
