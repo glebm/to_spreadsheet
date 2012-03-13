@@ -52,12 +52,12 @@ h3. Formatting
 
 You can use class names on td/th for typed values. Here is the list of class to type mapping:
 
-  |_. Class          |_. Format  |
-  | /decimal|float/  | Decimal  |
-  | /num|int/        | Integer  |
-  | /datetime/       | DateTime |
-  | /date/           | Date     |
-  | /time/           | Time     |
+|_. ==CSS== class  |_. Format |
+| decimal or float | Decimal  |
+| num or int       | Integer  |
+| datetime         | DateTime |
+| date             | Date     |
+| time             | Time     |
 
 h3. Worksheets
 
