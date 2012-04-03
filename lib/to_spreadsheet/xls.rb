@@ -6,6 +6,8 @@ module ToSpreadsheet
     def to_io(html)
       spreadsheet = Spreadsheet::Workbook.new
 
+      pageheader_fmt = Spreadsheet::Format.new :weight => :bold, :size => 14
+      pagesubheader_fmt = Spreadsheet::Format.new :weight => :bold, :size => 13
       tblheader_fmt = Spreadsheet::Format.new :weight => :bold, :size => 12
       th_fmt = Spreadsheet::Format.new :weight => :bold 
       money_fmt = Spreadsheet::Format.new :number_format => '0.00;[red](-0)'
@@ -24,17 +26,25 @@ module ToSpreadsheet
         end
 
         # Either set name="name" or <table><caption>name</caption> to put a header before the table starts
-        tblname = xml_table.css('caption').inner_text.presence || xml_table['name'] || nil
-        if tblname
-          sheet[row, 0] = tblname
-          sheet.row(row).set_format 0, tblheader_fmt
-          sheet.row(row).height = 16
-          row += 1
-        end
+#        tblname = xml_table.css('caption').inner_text.presence || xml_table['name'] || nil
+#        if tblname
+#          sheet[row, 0] = tblname
+#          sheet.row(row).set_format 0, tblheader_fmt
+#          sheet.row(row).height = 16
+#          row += 1
+#        end
 
         xml_table.css('tr').each do |row_node|
           row_node.css('th,td').each_with_index do |col_node, col|
             sheet[row, col] = typed_node_val(col_node)
+
+            if col_node[:class] =~ /subheader/
+              sheet.row(row).height = 17.7
+              sheet.row(row).set_format col, pagesubheader_fmt
+            elsif col_node[:class] =~ /header/
+              sheet.row(row).height = 18.7
+              sheet.row(row).set_format col, pageheader_fmt
+            end
 
             if col_node[:class] =~ /date/
               sheet.row(row).set_format col, date_fmt
@@ -43,6 +53,20 @@ module ToSpreadsheet
             elsif col_node.name == 'th'
               sheet.row(row).set_format col, th_fmt
             end
+
+            fmt = sheet.row(row).formats[col]
+            fmt ||= Spreadsheet::Format.new
+            borders = fmt.border
+
+            if col_node[:class] =~ /green/
+              fmt.pattern_fg_color = :lime #'#d7e4bc'
+              fmt.pattern = 1
+            end
+
+            fmt.border = [borders[3], borders[2], true, borders[0]] if col_node[:class] =~ /border_top/
+            fmt.border = [borders[3], borders[2], borders[1], true] if col_node[:class] =~ /border_bottom/
+
+            sheet.row(row).set_format col, fmt
 
             # dynamic column widths
             len = sheet[row, col].to_s.length
