@@ -48,7 +48,7 @@ module ToSpreadsheet
 
           row_node.css('th,td').each_with_index do |col_node, col|
 
-            if ! col_node[:xls_style].nil? && ! col_node[:xls_style].empty?
+            if ( ! col_node[:xls_style].nil? && ! col_node[:xls_style].empty? ) || ! row_stylehash.empty?
               stylehash = eval( col_node[:xls_style] ) rescue {}
               merged = stylehash.merge(row_stylehash)
               style = spreadsheet.styles.add_style merged
