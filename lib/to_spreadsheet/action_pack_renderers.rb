@@ -8,7 +8,8 @@ require 'to_spreadsheet/xlsx'
 # This is also how Rails internally implements its :json and :xml renderers
 # Rarely used, nevertheless public API
 ActionController::Renderers.add :xlsx do |template, options|
-  send_data ToSpreadsheet::XLSX.to_io(render_to_string(template, options)).read, :type => :xlsx, :disposition => "attachment; filename=\"#{template}.xlsx\""
+  filename = options[:filename] || options[:template] || 'data'
+  send_data ToSpreadsheet::XLSX.to_io(render_to_string(options[:template], options)).read, :type => :xlsx, :disposition => "attachment; filename=\"#{filename}.xlsx\""
 end
 
 class ActionController::Responder
