@@ -32,7 +32,11 @@ module ToSpreadsheet
         # Set newtab=1 on a table in the layout where it should be on a new sheet
         if sheet.nil? || xml_table['newtab']
           sheetname = xml_table.css('caption').inner_text.presence || xml_table['name'] || "Sheet #{i + 1}"
-          sheet = spreadsheet.add_worksheet(:name => sheetname)
+
+          page_setup_options = eval ( xml_table['page_setup'] ) rescue nil
+          page_setup_options = { fit_to_height: 1, fit_to_width: 1, orientation: :landscape } if page_setup_options.nil?
+
+          sheet = spreadsheet.add_worksheet(:name => sheetname, :page_setup => page_setup_options)
           row = 0
           colwidths = []
         end
