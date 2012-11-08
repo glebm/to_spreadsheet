@@ -9,7 +9,7 @@ require 'to_spreadsheet/xlsx'
 # Rarely used, nevertheless public API
 ActionController::Renderers.add :xlsx do |template, options|
   filename = options[:filename] || options[:template] || 'data'
-  send_data ToSpreadsheet::XLSX.to_io(render_to_string(options[:template], options)).read, :type => :xlsx, :disposition => "attachment; filename=\"#{filename}.xlsx\""
+  send_data ToSpreadsheet::XLSX.generate(render_to_string(options[:template], options)).to_stream.read, :type => :xlsx, :disposition => "attachment; filename=\"#{filename}.xlsx\""
 end
 
 class ActionController::Responder
