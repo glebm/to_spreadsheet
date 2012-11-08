@@ -26,7 +26,7 @@ bc. # _my_thingie.haml
   %caption My thingies
   %thead
     %tr
-      %td ID
+      %td{width: 5} ID
       %td Name
   %tbody
     - my_thingies.each do |thingie|
