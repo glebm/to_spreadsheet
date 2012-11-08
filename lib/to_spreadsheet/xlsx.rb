@@ -30,17 +30,14 @@ module ToSpreadsheet
       row = nil
       colwidths = []
       Nokogiri::HTML::Document.parse(html).css('table').each_with_index do |xml_table, i|
-        # Set newtab=1 on a table in the layout where it should be on a new sheet
-        if sheet.nil? || xml_table['newtab']
-          sheetname = xml_table.css('caption').inner_text.presence || xml_table['name'] || "Sheet #{i + 1}"
+        sheetname = xml_table.css('caption').inner_text.presence || xml_table['name'] || "Sheet #{i + 1}"
 
-          page_setup_options = eval ( xml_table['page_setup'] ) rescue nil
-          page_setup_options = { fit_to_height: 1, fit_to_width: 1, orientation: :landscape } if page_setup_options.nil?
+        page_setup_options = eval ( xml_table['page_setup'] ) rescue nil
+        page_setup_options = { fit_to_height: 1, fit_to_width: 1, orientation: :landscape } if page_setup_options.nil?
 
-          sheet = spreadsheet.add_worksheet(:name => sheetname, :page_setup => page_setup_options)
-          row = 0
-          colwidths = []
-        end
+        sheet = spreadsheet.add_worksheet(:name => sheetname, :page_setup => page_setup_options)
+        row = 0
+        colwidths = [] # cache column widths as we go through the table, only set it once at the end
 
         xml_table.css('tr').each do |row_node|
           xlsrow = sheet.add_row
@@ -64,7 +61,8 @@ module ToSpreadsheet
 
             mywidth = xlscol.value.to_s.length
             mywidth += 3 if spreadsheet.styles.fonts[spreadsheet.styles.cellXfs[xlscol.index].fontId].b rescue false
-            if colwidths[xlscol.index].nil? || mywidth> colwidths[xlscol.index]
+            
+            if colwidths[xlscol.index].nil? || mywidth > colwidths[xlscol.index]
               colwidths[xlscol.index] = mywidth
             end
 
@@ -72,7 +70,7 @@ module ToSpreadsheet
 
           row += 1
         end
-        colwidths.each_with_index.map { |len, i| sheet.column_info[i].width = len + 2 }
+        colwidths.each_with_index.map { |len, i| sheet.column_info[i].width = len }
         row += 1 # extra space between tables on same sheet
       end
       package
