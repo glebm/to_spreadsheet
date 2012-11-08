@@ -20,7 +20,8 @@ module ToSpreadsheet
   module XLSX
     extend self
 
-    def to_io(html)
+    # Generate an AXLSX Package for the passed HTML table
+    def generate(html)
       package = Axlsx::Package.new
       package.use_autowidth = false
       spreadsheet = package.workbook
@@ -74,7 +75,7 @@ module ToSpreadsheet
         colwidths.each_with_index.map { |len, i| sheet.column_info[i].width = len + 2 }
         row += 1 # extra space between tables on same sheet
       end
-      package.to_stream
+      package
     end
 
     private

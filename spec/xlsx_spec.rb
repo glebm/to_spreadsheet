@@ -3,48 +3,45 @@ require 'spec_helper'
 describe ToSpreadsheet::XLSX do
   let(:spreadsheet) {
     html  = Haml::Engine.new(TEST_HAML).render
-    xls_io = ToSpreadsheet::XLSX.to_io(html)
-    Spreadsheet.open(xls_io)
+    package = ToSpreadsheet::XLSX.generate(html)
   }
 
   it 'creates multiple worksheets' do
-    spreadsheet.should have(2).worksheets
+    spreadsheet.workbook.should have(2).worksheets
   end
 
   it 'supports num format' do
-    spreadsheet.worksheet(0)[1, 1].should == 20
+    spreadsheet.workbook.worksheets[0].rows[1].cells[1].value.should == 20
   end
 
   it 'support float format' do
-    spreadsheet.worksheet(1)[1, 1].class.should be(Float)
+    spreadsheet.workbook.worksheets[1].rows[1].cells[1].type.should be(:float)
   end
 
   it 'supports date format' do
-    spreadsheet.worksheet(0)[1, 2].class.should be(Date)
+    spreadsheet.workbook.worksheets[0].rows[1].cells[2].type.should be(:date)
   end
 
   it 'parses null dates' do
-    spreadsheet.worksheet(0)[2, 2].class.should_not be(Date)
+    spreadsheet.workbook.worksheets[0].rows[2].cells[2].type.should_not be(:date)
   end
 
   it 'parses default values' do
-    spreadsheet.worksheet(0)[2, 1].should == 100
+    spreadsheet.workbook.worksheets[0].rows[2].cells[1].value.should == 100
   end
 
   it 'sets column width based on th width' do
-    spreadsheet.worksheet(1).column(0).width.should == 25
+    spreadsheet.workbook.worksheets[0].column_info[0].width.should == 25
   end
 
   it 'sets column width based on td width' do
-    spreadsheet.worksheet(1).column(1).width.should == 35
+    spreadsheet.workbook.worksheets[1].column_info[1].width.should == 35
   end
 
-  # This is for final manual test
   # The test spreadsheet will be saved to /tmp/spreadsheet.xls
   it 'writes to disk' do
-    f = File.open('/tmp/spreadsheet.xls', 'wb')
-    Spreadsheet.writer(f).write_workbook(spreadsheet, f)
-    f.close
+    spreadsheet.serialize('/tmp/spreadsheet.xlsx')
+    File.exists?('/tmp/spreadsheet.xlsx').should == true
   end
 
 end
@@ -55,7 +52,7 @@ TEST_HAML = <<-HAML
   %caption A worksheet
   %thead
     %tr
-      %th Name
+      %th{ width: 25 } Name
       %th Age
       %th Date
   %tbody
@@ -72,7 +69,7 @@ TEST_HAML = <<-HAML
   %caption Another worksheet
   %thead
     %tr
-      %th{ width: 25 } Name
+      %th Name
       %th Age
       %th Date
   %tbody
