@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 gem 'rails', '> 3'
-gem 'spreadsheet'
+gem 'axlsx'
 gem 'nokogiri'
 
 group :test, :development do

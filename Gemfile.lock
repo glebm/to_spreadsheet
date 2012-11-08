@@ -30,11 +30,16 @@ GEM
     activesupport (3.1.3)
       multi_json (~> 1.0)
     arel (2.2.1)
+    axlsx (1.3.3)
+      htmlentities (~> 4.3.1)
+      nokogiri (>= 1.4.1)
+      rubyzip (>= 0.9.5)
     builder (3.0.0)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     haml (3.1.4)
     hike (1.2.1)
+    htmlentities (4.3.1)
     i18n (0.6.0)
     json (1.6.5)
     mail (2.3.0)
@@ -81,9 +86,7 @@ GEM
     rspec-expectations (2.8.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.8.0)
-    ruby-ole (1.2.11.2)
-    spreadsheet (0.6.7)
-      ruby-ole (>= 1.0)
+    rubyzip (0.9.9)
     sprockets (2.0.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -100,8 +103,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  axlsx
   haml
   nokogiri
   rails (> 3)
   rspec
-  spreadsheet

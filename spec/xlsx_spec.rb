@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe ToSpreadsheet::XLS do
+describe ToSpreadsheet::XLSX do
   let(:spreadsheet) {
     html  = Haml::Engine.new(TEST_HAML).render
-    xls_io = ToSpreadsheet::XLS.to_io(html)
+    xls_io = ToSpreadsheet::XLSX.to_io(html)
     Spreadsheet.open(xls_io)
   }
 
