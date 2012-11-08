@@ -22,21 +22,38 @@ module ToSpreadsheet
     private
 
     def typed_node_val(node)
-      val = node.inner_text
-      case node[:class]
-        when /decimal|float/
-          val.to_f
-        when /num|int/
-          val.to_i
-        when /datetime/
-          DateTime.parse(val)
-        when /date/
-          Date.parse(val)
-        when /time/
-          Time.parse(val)
-        else
-          val
+      val = val_or_null_default(node)
+      
+      return '' if !val
+
+      begin
+        case node[:class]
+          when /decimal|float/
+            val.to_f
+          when /num|int/
+            val.to_i
+          when /datetime/
+            DateTime.parse(val)
+          when /date/
+            Date.parse(val)
+          when /time/
+            Time.parse(val)
+          else
+            val
+        end
+      rescue
+        val
       end
     end
+
+    def val_or_null_default(node)
+      val = node.inner_text
+      if val.blank?
+        node['data-null']
+      else
+        val
+      end
+    end
+
   end
 end
