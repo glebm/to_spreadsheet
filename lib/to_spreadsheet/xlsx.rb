@@ -62,8 +62,13 @@ module ToSpreadsheet
             mywidth = xlscol.value.to_s.length
             mywidth += 3 if spreadsheet.styles.fonts[spreadsheet.styles.cellXfs[xlscol.index].fontId].b rescue false
             
-            if colwidths[xlscol.index].nil? || mywidth > colwidths[xlscol.index]
-              colwidths[xlscol.index] = mywidth
+            if colwidths[xlscol.index].nil? 
+              sheet.column_info[xlscol.index].width = col_node[:width].to_i if col_node[:width]
+
+              # AB: Not quite sure what this is for?
+              if colwidths[xlscol.index] && mywidth > colwidths[xlscol.index]
+                colwidths[xlscol.index] = mywidth
+              end
             end
 
           end
