@@ -57,7 +57,7 @@ TEST_HAML = <<-HAML
       %td.date 27/05/1991
     %tr
       %td John
-      %td.num{ data: { null: 100 } }
+      %td.num{ data: { default: 100 } }
       %td.date
 
 %table

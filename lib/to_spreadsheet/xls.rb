@@ -49,7 +49,7 @@ module ToSpreadsheet
     def val_or_null_default(node)
       val = node.inner_text
       if val.blank?
-        node['data-null']
+        node['data-default']
       else
         val
       end
