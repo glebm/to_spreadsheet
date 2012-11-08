@@ -32,7 +32,11 @@ describe ToSpreadsheet::XLS do
   end
 
   it 'sets column width based on th width' do
-    spreadsheet.worksheet(1).column(0).width.should == 20
+    spreadsheet.worksheet(1).column(0).width.should == 25
+  end
+
+  it 'sets column width based on td width' do
+    spreadsheet.worksheet(1).column(1).width.should == 35
   end
 
   # This is for final manual test
@@ -68,13 +72,13 @@ TEST_HAML = <<-HAML
   %caption Another worksheet
   %thead
     %tr
-      %th{ width: 20 } Name
+      %th{ width: 25 } Name
       %th Age
       %th Date
   %tbody
     %tr
       %td Alice
-      %td.float 19.5
+      %td.float{ width: 35 } 19.5
       %td.date 10/05/1991
 
 HAML
