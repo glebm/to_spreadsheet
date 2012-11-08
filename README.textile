@@ -15,7 +15,10 @@ class MyThingiesController < ApplicationController
   respond_to :xls, :html
   def index
     @my_thingies = MyThingie.all
-    respond_with(@my_thingies)
+    respond_to do |format|
+      format.html {}
+      format.xlsx { render :xlsx => :index, :filename => "thingies_index" }
+    end
   end
 end
 
@@ -26,16 +29,18 @@ bc. # _my_thingie.haml
   %caption My thingies
   %thead
     %tr
-      %td ID
+      %td{width: 5} ID
       %td Name
   %tbody
     - my_thingies.each do |thingie|
       %tr
-        %td.number= thingie.id
+        %td.number{ xls_style: '{sz:14,format_code:"0000%"}' }= thingie.id
         %td= thingie.name
   %tfoot
     %tr
       %td(colspan="2") #{my_thingies.length}
+
+See axlsx's README for info and syntax on styles.  If a TR has a style, it's merged with any TD styles under it.
 
 In your index.xls.haml:
 
@@ -59,9 +64,9 @@ You can use class names on td/th for typed values. Here is the list of class to 
 | date             | Date     |
 | time             | Time     |
 
-h3. Default null values
+h3. Default values
 
-Add a `data-null="default value"` attribute to a cell to use the value as a default if the model value is nil.
+Add a `data-default="default value"` attribute to a cell to use the value as a default if the model value is nil.
 
 h3. Worksheets
 
