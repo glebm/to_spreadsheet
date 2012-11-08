@@ -31,6 +31,10 @@ describe ToSpreadsheet::XLS do
     spreadsheet.worksheet(0)[2, 1].should == 100
   end
 
+  it 'sets column width based on th width' do
+    spreadsheet.worksheet(1).column(0).width.should == 20
+  end
+
   # This is for final manual test
   # The test spreadsheet will be saved to /tmp/spreadsheet.xls
   it 'writes to disk' do
@@ -64,7 +68,7 @@ TEST_HAML = <<-HAML
   %caption Another worksheet
   %thead
     %tr
-      %th Name
+      %th{ width: 20 } Name
       %th Age
       %th Date
   %tbody
