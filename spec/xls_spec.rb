@@ -23,6 +23,14 @@ describe ToSpreadsheet::XLS do
     spreadsheet.worksheet(0)[1, 2].class.should be(Date)
   end
 
+  it 'parses null dates' do
+    spreadsheet.worksheet(0)[2, 2].class.should_not be(Date)
+  end
+
+  it 'parses default values' do
+    spreadsheet.worksheet(0)[2, 1].should == 100
+  end
+
   # This is for final manual test
   # The test spreadsheet will be saved to /tmp/spreadsheet.xls
   it 'writes to disk' do
@@ -49,8 +57,8 @@ TEST_HAML = <<-HAML
       %td.date 27/05/1991
     %tr
       %td John
-      %td.num 21
-      %td.date 01/05/1990
+      %td.num{ data: { null: 100 } }
+      %td.date
 
 %table
   %caption Another worksheet

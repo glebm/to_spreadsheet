@@ -59,6 +59,10 @@ You can use class names on td/th for typed values. Here is the list of class to 
 | date             | Date     |
 | time             | Time     |
 
+h3. Default null values
+
+Add a `data-null="default value"` attribute to a cell to use the value as a default if the model value is nil.
+
 h3. Worksheets
 
 Every table in the view will be converted to a separate sheet.
