@@ -2,22 +2,27 @@ require 'active_support'
 require 'action_controller/metal/renderers'
 require 'action_controller/metal/responder'
 
-require 'to_spreadsheet/xlsx'
+require 'to_spreadsheet/axlsx/renderer'
 
 # This will let us do thing like `render :xlsx => 'index'`
-# This is also how Rails internally implements its :json and :xml renderers
-# Rarely used, nevertheless public API
+# This is similar to how Rails internally implements its :json and :xml renderers
 ActionController::Renderers.add :xlsx do |template, options|
   filename = options[:filename] || options[:template] || 'data'
-  send_data ToSpreadsheet::XLSX.generate(render_to_string(options[:template], options)).to_stream.read, :type => :xlsx, :disposition => "attachment; filename=\"#{filename}.xlsx\""
+
+  html = with_context ToSpreadsheet.context.derive do
+    render_to_string(options[:template], options)
+  end
+
+  data = ToSpreadsheet::Axlsx::Renderer.to_data(html)
+  send_data data, type: :xlsx, disposition: %(attachment; filename="#{filename}.xlsx")
 end
 
 class ActionController::Responder
   # This sets up a default render call for when you do
   # respond_to do |format|
-  #   format.xls
+  #   format.xlsx
   # end
   def to_xlsx
-    controller.render :xlsx => controller.action_name
+    controller.render xlsx: controller.action_name
   end
 end

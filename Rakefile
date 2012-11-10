@@ -7,10 +7,16 @@ require 'rdoc/task'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
-task :generate_pdf do
-  Haml::Engine.new(File.read('spec/support/table.html.haml').render
-  xls_io = ToSpreadsheet::XLS.to_io(html)
-  f = File.open('/tmp/spreadsheet.xls', 'wb')
-  Spreadsheet.writer(f).write_workbook(spreadsheet, f)
-  f.close
+task :env do
+  $: << File.expand_path('lib', File.dirname(__FILE__))
+  require 'to_spreadsheet'
+  include ToSpreadsheet::Helpers
+end
+
+task :write_test_xlsx => :env do
+  require 'haml'
+  path = '/tmp/spreadsheet.xlsx'
+  html = Haml::Engine.new(File.read('spec/support/table.html.haml')).render
+  ToSpreadsheet::Axlsx::Renderer.to_package(html).serialize(path)
+  puts "Written to #{path}"
 end

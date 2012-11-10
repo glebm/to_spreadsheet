@@ -1,3 +1,13 @@
+:ruby
+  format_xls do
+    format 'tr', color: lambda { |row| 'ddffdd' if row.index.even? }
+    format 'th', b: true
+    default 'td.num', 100
+  end
+  format_xls 'table#two' do
+    format 'td', color: Axlsx::Color.new(rgb: 'ffaaaa')
+  end
+
 %table
   %caption A worksheet
   %thead
@@ -12,10 +22,10 @@
       %td.date 27/05/1991
     %tr
       %td John
-      %td.num{ data: { null: 100 } }
+      %td.num
       %td.date
 
-%table
+%table#two
   %caption Another worksheet
   %thead
     %tr

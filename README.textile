@@ -14,55 +14,86 @@ bc. # my_thingies_controller.rb
 class MyThingiesController < ApplicationController
   respond_to :xls, :html
   def index
-    @my_thingies = MyThingie.all
+    @my_thingies = MyItem.all
     respond_to do |format|
       format.html {}
-      format.xlsx { render :xlsx => :index, :filename => "thingies_index" }
+      format.xlsx { render xlsx: :index, filename: "thingies_index" }
     end
   end
 end
 
 In your view partial:
 
-bc. # _my_thingie.haml
+bc. # _my_items.haml
 %table
-  %caption My thingies
+  %caption My items
   %thead
     %tr
-      %td{width: 5} ID
+      %td ID
       %td Name
   %tbody
-    - my_thingies.each do |thingie|
+    - my_items.each do |my_item|
       %tr
-        %td.number{ xls_style: '{sz:14,format_code:"0000%"}' }= thingie.id
-        %td= thingie.name
+        %td.number= my_item.id
+        %td= my_item.name
   %tfoot
     %tr
-      %td(colspan="2") #{my_thingies.length}
-
-See axlsx's README for info and syntax on styles.  If a TR has a style, it's merged with any TD styles under it.
+      %td(colspan="2") #{my_items.length}
 
 In your index.xls.haml:
 
 bc. # index.xls.haml
-= render 'my_thingies', :my_thingies => @my_thingies
+= render 'my_items', my_items: @my_items
 
 In your index.html.haml:
 
 bc. # index.html.haml
-= link_to 'Download XLS', my_thingies_url(:format => :xls)
-= render 'my_thingies', :my_thingies => @my_thingies
+= link_to 'Download spreadsheet', my_items_url(format: :xlsx)
+= render 'my_items', my_items: @my_items
 
 h3. Formatting
 
-You can use class names on td/th for typed values. Here is the list of class to type mapping:
+You can define formats in your view file (local to the view) or in the initializer
+
+bc. format_xls 'table.my-table' do
+  workbook use_autowidth: true
+  sheet    orientation: landscape
+  format 'th', b: true # bold
+  format 'tbody tr', color: lambda { |row| 'ddffdd' if row.index.odd? }
+  format 'A3:B10', i: true # italic
+  format column: 0, width: 35
+  format 'td.custom', lambda { |cell| modify cell somehow.}
+  # default value (fallback value when value is blank or 0 for integer / float)
+  default 'td.price', 10
+
+For the full list of supported properties head here: http://rubydoc.info/github/randym/axlsx/Axlsx/Cell
+In addition, for column formats, Axlsx columnInfo properties are also supported
+
+h3. Themes
+
+You can define "themes" - blocks of formatting code:
+
+bc. ToSpreadsheet.theme :zebra do
+  format 'tr', color: lambda { |row| 'ddffdd' if row.index.odd? }
+
+And then use them:
+
+bc. format_xls 'table.zebra', ToSpreadsheet.theme(:zebra)
+
+h3. Types
+
+The default theme uses class names on td/th to cast values.
+Here is the list of class to type mapping:
 
 |_. ==CSS== class  |_. Format |
 | decimal or float | Decimal  |
 | num or int       | Integer  |
-| datetime         | DateTime |
-| date             | Date     |
-| time             | Time     |
+| datetime         | DateTime (Chronic.parse) |
+| date             | Date (Date.parse)        |
+| time             | Time (Chronic.parse)     |
+
+h3. Styling
+
 
 h3. Default values
 
