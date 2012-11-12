@@ -51,6 +51,12 @@ bc. # index.html.haml
 = link_to 'Download spreadsheet', my_items_url(format: :xlsx)
 = render 'my_items', my_items: @my_items
 
+
+h3. Worksheets
+
+Every table in the view will be converted to a separate sheet.
+The sheet title will be assigned to the value of the table's <caption> element if it exists.
+
 h3. Formatting
 
 You can define formats in your view file (local to the view) or in the initializer
@@ -91,15 +97,3 @@ Here is the list of class to type mapping:
 | datetime         | DateTime (Chronic.parse) |
 | date             | Date (Date.parse)        |
 | time             | Time (Chronic.parse)     |
-
-h3. Styling
-
-
-h3. Default values
-
-Add a `data-default="default value"` attribute to a cell to use the value as a default if the model value is nil.
-
-h3. Worksheets
-
-Every table in the view will be converted to a separate sheet.
-The sheet title will be assigned to the value of the table's <caption> element if it exists.
