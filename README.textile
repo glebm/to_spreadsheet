@@ -51,11 +51,10 @@ bc. # index.html.haml
 = link_to 'Download spreadsheet', my_items_url(format: :xlsx)
 = render 'my_items', my_items: @my_items
 
-
 h3. Worksheets
 
 Every table in the view will be converted to a separate sheet.
-The sheet title will be assigned to the value of the table's <caption> element if it exists.
+The sheet title will be assigned to the value of the table's caption element if it exists.
 
 h3. Formatting
 
