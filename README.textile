@@ -16,8 +16,8 @@ class MyThingiesController < ApplicationController
   def index
     @my_thingies = MyItem.all
     respond_to do |format|
-      format.html {}
-      format.xlsx { render xlsx: :index, filename: "thingies_index" }
+      format.html 
+      format.xlsx { render xlsx: :index, filename: "my_items_doc" }
     end
   end
 end
