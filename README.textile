@@ -14,7 +14,7 @@ bc. # my_thingies_controller.rb
 class MyThingiesController < ApplicationController
   respond_to :xls, :html
   def index
-    @my_thingies = MyItem.all
+    @my_items = MyItem.all
     respond_to do |format|
       format.html 
       format.xlsx { render xlsx: :index, filename: "my_items_doc" }
