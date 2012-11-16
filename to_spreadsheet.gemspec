@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = Dir["README*"]
   s.add_dependency 'rails'
   s.add_dependency 'nokogiri'
-  s.add_dependency 'spreadsheet'
+  s.add_dependency 'axlsx'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'sqlite3-ruby'
 end
