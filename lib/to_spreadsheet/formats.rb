@@ -1,8 +1,11 @@
 module ToSpreadsheet
+  # An intrnal container of formats
   class Formats
     attr_accessor :styles_by_type
     attr_writer :sheet_props
-
+    
+    # A list of [format_selector, formatting block] by `type`
+    # `type` is one of :sheet, :workbook, :range, :column, :row, :css
     def [](type)
       (@styles_by_type ||= {})[type.to_sym] ||= []
     end
@@ -13,7 +16,7 @@ module ToSpreadsheet
       end if @styles_by_type
     end
 
-    # Sheet props without selectors
+    # A list of all formatting blocks with type :sheet
     def sheet_props
       self[:sheet].map(&:last).inject({}, &:merge)
     end
