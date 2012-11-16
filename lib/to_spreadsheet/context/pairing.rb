@@ -1,6 +1,6 @@
 module ToSpreadsheet
   class Context
-    # Associating Axlsx entities and Nokogiri nodes
+    # Axlsx classes <-> Nokogiri table nodes round-tripping
     module Pairing
       def assoc!(entity, node)
         @entity_to_node         ||= {}
