@@ -2,7 +2,11 @@ require 'to_spreadsheet/context/pairing'
 require 'to_spreadsheet/formats'
 
 module ToSpreadsheet
+  # This is the DSL context for `format_xls`
+  # It maintains the current formats set to enable for local and nested `format_xls` blocks
   class Context
+    # todo (cleaner code): split features further into modules
+    # todo (extensibility): add processing callbacks (internal API)
     include Pairing
 
     def initialize(wb_options = nil)
