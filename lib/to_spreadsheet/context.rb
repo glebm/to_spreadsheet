@@ -8,8 +8,7 @@ require 'to_spreadsheet/rule/sheet'
 require 'to_spreadsheet/rule/workbook'
 
 module ToSpreadsheet
-  # This is the DSL context for `format_xls`
-  # It maintains the current formats set to enable for local and nested `format_xls` blocks
+  # This is the DSL context
   class Context
     include Pairing
     attr_accessor :rules
