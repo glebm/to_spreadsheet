@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.email = "glex.spb@gmail.com"
   s.author = "Gleb Mazovetskiy"
   s.homepage = "https://github.com/glebm/to_spreadsheet"
-  s.summary = "Adds various html -> spreadsheet (xls, odt, etc) renderers to Rails."
+  s.summary = "Render existing views as Excel documents"
   s.description = "Rendering spreadsheets from Rails made easy"
   s.files = Dir["lib/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.version = ToSpreadsheet::VERSION
