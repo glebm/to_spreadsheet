@@ -2,7 +2,7 @@ require 'spec_helper'
 
 
 
-describe ToSpreadsheet::Axlsx::Formatter do
+describe ToSpreadsheet::Rule::DefaultValue do
   let :spreadsheet do
     build_spreadsheet(haml: <<HAML)
 - format_xls 'table' do

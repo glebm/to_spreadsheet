@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ToSpreadsheet::Axlsx::Formatter do
+describe ToSpreadsheet::Rule::Format do
   let :spreadsheet do
     build_spreadsheet haml: <<-HAML
 :ruby

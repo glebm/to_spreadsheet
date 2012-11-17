@@ -7,8 +7,6 @@ require 'to_spreadsheet/context'
 
 module ToSpreadsheet
   class << self
-    attr_accessor :context
-
     def theme(name, &formats)
       @themes ||= {}
       if formats
@@ -21,4 +19,4 @@ module ToSpreadsheet
 end
 
 require 'to_spreadsheet/themes/default'
-ToSpreadsheet.context = ToSpreadsheet::Context.new.apply ToSpreadsheet.theme(:default)
+ToSpreadsheet::Context.global.format_xls ToSpreadsheet.theme(:default)

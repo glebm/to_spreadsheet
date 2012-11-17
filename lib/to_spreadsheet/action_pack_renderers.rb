@@ -2,14 +2,18 @@ require 'active_support'
 require 'action_controller/metal/renderers'
 require 'action_controller/metal/responder'
 
-require 'to_spreadsheet/axlsx/renderer'
+require 'to_spreadsheet/renderer'
 
 # This will let us do thing like `render :xlsx => 'index'`
 # This is similar to how Rails internally implements its :json and :xml renderers
 ActionController::Renderers.add :xlsx do |template, options|
   filename = options[:filename] || options[:template] || 'data'
 
-  html = with_context ToSpreadsheet.context.derive do
+  html = with_context ToSpreadsheet::Context.global.merge(ToSpreadsheet::Context.new) do
+    # local context
+    @local_formats.each do |selector, &block|
+      context.process_dsl selector, &block
+    end if @local_formats
     render_to_string(options[:template], options)
   end
 

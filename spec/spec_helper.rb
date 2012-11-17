@@ -14,5 +14,5 @@ def build_spreadsheet(src = {})
          elsif src[:file]
            File.read(File.expand_path "support/#{src[:file]}", File.dirname(__FILE__))
          end
-  ToSpreadsheet::Axlsx::Renderer.to_package(Haml::Engine.new(haml).render)
+  ToSpreadsheet::Renderer.to_package(Haml::Engine.new(haml).render)
 end

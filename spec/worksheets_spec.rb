@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ToSpreadsheet::Axlsx::Renderer do
+describe ToSpreadsheet::Renderer do
   let :spreadsheet do
     build_spreadsheet haml: <<-HAML
 %table
