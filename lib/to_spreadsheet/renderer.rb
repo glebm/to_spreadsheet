@@ -1,33 +1,29 @@
 require 'axlsx'
+require 'nokogiri'
+
 module ToSpreadsheet
   module Renderer
     extend self
 
-    def to_stream(html, local_context = nil)
-      to_package(html, local_context).to_stream
+    def to_stream(html, context = nil)
+      to_package(html, context).to_stream
     end
 
-    def to_data(html, local_context = nil)
-      to_package(html, local_context).to_stream.read
+    def to_data(html, context = nil)
+      to_package(html, context).to_stream.read
     end
 
-    def to_package(html, local_context = nil)
-      with_context init_context(local_context) do
-        package = build_package(html, context)
-        context.rules.each do |rule|
-          puts "Applying #{rule}"
-          rule.apply(context, package)
-        end
-        package
+    def to_package(html, context = nil)
+      context ||= ToSpreadsheet::Context.global.merge(Context.new)
+      package = build_package(html, context)
+      context.rules.each do |rule|
+        #Rails.logger.debug "Applying #{rule}"
+        rule.apply(context, package)
       end
+      package
     end
 
     private
-
-    def init_context(local_context)
-      local_context ||= ToSpreadsheet::Context.new
-      ToSpreadsheet::Context.global.merge local_context
-    end
 
     def build_package(html, context)
       package     = ::Axlsx::Package.new

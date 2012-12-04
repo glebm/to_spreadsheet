@@ -17,10 +17,26 @@ module ToSpreadsheet
       def global
         @global ||= new
       end
+
+      def current
+        Thread.current[:_to_spreadsheet_ctx]
+      end
+
+      def current=(ctx)
+        Thread.current[:_to_spreadsheet_ctx] = ctx
+      end
+
+      def with_context(ctx, &block)
+        old = current
+        self.current = ctx
+        r = block.call(ctx)
+        self.current = old
+        r
+      end
     end
 
     def initialize(wb_options = nil)
-      @rules          = []
+      @rules = []
       workbook wb_options if wb_options
     end
 
@@ -83,7 +99,7 @@ module ToSpreadsheet
 
     # A new context
     def merge(other_context)
-      ctx = Context.new()
+      ctx       = Context.new()
       ctx.rules = rules + other_context.rules
       ctx
     end

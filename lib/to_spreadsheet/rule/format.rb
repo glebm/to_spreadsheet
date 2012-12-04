@@ -5,10 +5,11 @@ module ToSpreadsheet
     class Format < Base
       include ::ToSpreadsheet::TypeFromValue
       def apply(context, sheet)
+        wb = sheet.workbook
         case selector_type
           when :css
             css_match selector_query, context.to_xml_node(sheet) do |xml_node|
-              apply_inline_styles context, context.to_xls_entity(xml_node)
+              add_and_apply_style wb, context, context.to_xls_entity(xml_node)
             end
           when :row
             sheet.row_style selector_query, options if options.present?
@@ -17,7 +18,7 @@ module ToSpreadsheet
             sheet.col_style selector_query, inline_styles if inline_styles.present?
             apply_col_info sheet.column_info[selector_query]
           when :range
-            apply_inline_styles range_match(selector_type, sheet), context
+            add_and_apply_style wb, range_match(selector_type, sheet), context
         end
       end
 
@@ -32,7 +33,7 @@ module ToSpreadsheet
         end
       end
 
-      def apply_inline_styles(context, xls_ent)
+      def add_and_apply_style(wb, context, xls_ent)
         # Custom format rule
         # format 'td.sel', lambda { |node| ...}
         if self.options.is_a?(Proc)
@@ -47,17 +48,9 @@ module ToSpreadsheet
           options[k] = context.instance_exec(xls_ent, &v) if v.is_a?(Proc)
         end
 
-        # Apply inline styles
-        options.each do |k, v|
-          next if v.nil?
-          setter = :"#{k}="
-          xls_ent.send setter, v if xls_ent.respond_to?(setter)
-          if xls_ent.respond_to?(:cells)
-            xls_ent.cells.each do |cell|
-              cell.send setter, v if cell.respond_to?(setter)
-            end
-          end
-        end
+        style = wb.styles.add_style options
+        cells = xls_ent.respond_to?(:cells) ? xls_ent.cells : [xls_ent]
+        cells.each { |cell| cell.style = style }
       end
     end
   end

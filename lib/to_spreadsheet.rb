@@ -1,9 +1,7 @@
-require 'nokogiri'
-require 'to_spreadsheet/action_pack_renderers'
-require 'to_spreadsheet/mime_types'
 require 'to_spreadsheet/version'
-require 'to_spreadsheet/helpers'
 require 'to_spreadsheet/context'
+require 'to_spreadsheet/renderer'
+require 'to_spreadsheet/railtie' if defined?(Rails)
 
 module ToSpreadsheet
   class << self

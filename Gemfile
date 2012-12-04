@@ -10,4 +10,5 @@ group :test, :development do
   gem 'haml'
   gem 'RedCloth'
   gem 'debugger', platform: :ruby
+  gem 'ruby-debug', platform: :jruby
 end
