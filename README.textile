@@ -64,14 +64,14 @@ bc. format_xls 'table.my-table' do
   workbook use_autowidth: true
   sheet    orientation: landscape
   format 'th', b: true # bold
-  format 'tbody tr', color: lambda { |row| 'ddffdd' if row.index.odd? }
+  format 'tbody tr', bg_color: lambda { |row| 'ddffdd' if row.index.odd? }
   format 'A3:B10', i: true # italic
   format column: 0, width: 35
   format 'td.custom', lambda { |cell| modify cell somehow.}
   # default value (fallback value when value is blank or 0 for integer / float)
   default 'td.price', 10
 
-For the full list of supported properties head here: http://rubydoc.info/github/randym/axlsx/Axlsx/Cell
+For the full list of supported properties head here: http://rubydoc.info/github/randym/axlsx/Axlsx/Styles#add_style-instance_method
 In addition, for column formats, Axlsx columnInfo properties are also supported
 
 h3. Themes
@@ -79,7 +79,7 @@ h3. Themes
 You can define "themes" - blocks of formatting code:
 
 bc. ToSpreadsheet.theme :zebra do
-  format 'tr', color: lambda { |row| 'ddffdd' if row.index.odd? }
+  format 'tr', bg_color: lambda { |row| 'ddffdd' if row.index.odd? }
 
 And then use them:
 
