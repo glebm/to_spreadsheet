@@ -7,7 +7,7 @@ require 'action_controller/metal/responder'
 ActionController::Renderers.add :xlsx do |template, options|
   filename = options[:filename] || options[:template] || 'data'
   data = ToSpreadsheet::Context.with_context ToSpreadsheet::Context.global.merge(ToSpreadsheet::Context.new) do |context|
-    html = render_to_string(template, options.merge(template: template.to_s, formats: ['html']))
+    html = render_to_string(template, options.merge(template: template.to_s, formats: ['xlsx', 'html']))
     ToSpreadsheet::Renderer.to_data(html, context)
   end
   send_data data, type: :xlsx, disposition: %(attachment; filename="#{filename}.xlsx")
