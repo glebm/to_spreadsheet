@@ -13,14 +13,14 @@ end.flatten
 
 
 Gem::Specification.new do |s|
-  s.name = "to_spreadsheet"
-  s.email = "glex.spb@gmail.com"
-  s.author = "Gleb Mazovetskiy"
-  s.homepage = "https://github.com/glebm/to_spreadsheet"
-  s.summary = "Render existing views as Excel documents with style!"
-  s.description = "Rendering spreadsheets from Rails made easy"
-  s.files = Dir["lib/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.version = ToSpreadsheet::VERSION
+  s.name              = "to_spreadsheet"
+  s.email             = "glex.spb@gmail.com"
+  s.author            = "Gleb Mazovetskiy"
+  s.homepage          = "https://github.com/glebm/to_spreadsheet"
+  s.summary           = "Render existing views as Excel documents with style!"
+  s.description       = "Render XLSX from Rails using existing views ( .*.html => .xlsx )"
+  s.files             = Dir["lib/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.version           = ToSpreadsheet::VERSION
   s.platform          = Gem::Platform::RUBY
   s.files             = include_files - exclude_files
   s.require_path      = "lib"
