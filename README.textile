@@ -76,7 +76,7 @@ In addition, for column formats, Axlsx columnInfo properties are also supported
 
 h3. Advanced formatting
 
-`to_spreadsheet` [associates](https://github.com/glebm/to_spreadsheet/blob/master/lib/to_spreadsheet/renderer.rb#L33)
+to_spreadsheet "associates":https://github.com/glebm/to_spreadsheet/blob/master/lib/to_spreadsheet/renderer.rb#L33
 HTML nodes with Axlsx objects as follows:
 
 |_. HTML tag       |_. Axlsx object |
