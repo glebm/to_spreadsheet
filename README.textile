@@ -74,6 +74,26 @@ bc. format_xls 'table.my-table' do
 For the full list of supported properties head here: http://rubydoc.info/github/randym/axlsx/Axlsx/Styles#add_style-instance_method
 In addition, for column formats, Axlsx columnInfo properties are also supported
 
+h3. Advanced formatting
+
+`to_spreadsheet` [associates](https://github.com/glebm/to_spreadsheet/blob/master/lib/to_spreadsheet/renderer.rb#L33)
+HTML nodes with Axlsx objects as follows:
+
+|_. HTML tag       |_. Axlsx object |
+| table            | worksheet      |
+| tr               | row            |
+| td, th           | cell           |
+
+For example, to directly manipulate a worksheet:
+
+bc. format_xls do
+  format 'table' do |worksheet|
+    worksheet.add_chart ...
+
+    # You can also get the associated Nokogiri node like this:
+    el = context.to_xml_node(worksheet)
+
+
 h3. Themes
 
 You can define "themes" - blocks of formatting code:
