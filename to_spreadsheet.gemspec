@@ -33,5 +33,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'chronic'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'sqlite3-ruby'
-  s.add_development_dependency 'byebug'
+  s.add_development_dependency 'rspec-rails'
 end
