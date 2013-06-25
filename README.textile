@@ -88,8 +88,7 @@ For example, to directly manipulate a worksheet:
 bc. format_xls do
   format 'table' do |worksheet|
     worksheet.add_chart ...
-
-    # You can also get the associated Nokogiri node like this:
+    # to get the associated Nokogiri node:
     el = context.to_xml_node(worksheet)
 
 
