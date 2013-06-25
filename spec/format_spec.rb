@@ -7,6 +7,9 @@ describe ToSpreadsheet::Rule::Format do
   format_xls do
     format column: 0, width: 25
     format 'tr', fg_color: lambda { |row| 'cccccc' if row.index.odd? }
+    format 'table' do |ws|
+      ws.name = 'Test'
+    end
   end
 %table
   %tr
@@ -22,11 +25,14 @@ describe ToSpreadsheet::Rule::Format do
     it 'sets column width' do
       sheet.column_info[0].width.should == 25
     end
-    it 'runs lambdas' do
+    it 'runs lambdas on properties' do
       cell = sheet.rows[1].cells[0]
       styles = sheet.workbook.styles
       font_id = styles.cellXfs[cell.style].fontId
       styles.fonts[font_id].color.rgb.should == Axlsx::Color.new(rgb: 'cccccc').rgb
+    end
+    it 'runs blocks for selectors' do
+      sheet.name.should == 'Test'
     end
   end
 end

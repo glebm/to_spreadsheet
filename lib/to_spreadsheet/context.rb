@@ -68,8 +68,13 @@ module ToSpreadsheet
     # format 'A1:C30', b: true
     # Accepted properties: http://rubydoc.info/github/randym/axlsx/Axlsx/Cell
     # column format also accepts Axlsx columnInfo settings
-    def format(selector = nil, options)
-      options  = options.dup
+    def format(selector = nil, options, &block)
+      if !selector && options.is_a?(String) && block
+        selector = options
+        options  = block
+      else
+        options = options.dup
+      end
       selector = selector_query(selector, options)
       add_rule :format, *selector, options
     end

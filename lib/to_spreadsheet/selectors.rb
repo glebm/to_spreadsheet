@@ -57,7 +57,9 @@ module ToSpreadsheet
     end
 
     def css_match(css_selector, xml_node, &block)
-      xml_node.css(css_selector).each(&block)
+      result = xml_node.css(css_selector)
+      block.call(xml_node) if xml_node.matches?(css_selector)
+      result.each(&block)
     end
 
     def css_match?(css_selector, xml_document, xml_node)

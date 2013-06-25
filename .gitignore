@@ -2,6 +2,7 @@
 .bundle/
 log/*.log
 pkg/
-
+*.gem
 Gemfile.lock
-.rvmrc
+.ruby-version
+.ruby-gemset
