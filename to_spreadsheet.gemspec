@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'nokogiri'
   s.add_dependency 'axlsx'
   s.add_dependency 'chronic'
+  s.add_dependency 'responders'
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'rspec-rails'
 end

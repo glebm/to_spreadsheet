@@ -1,6 +1,6 @@
 require 'active_support'
 require 'action_controller/metal/renderers'
-require 'action_controller/metal/responder'
+require 'action_controller/responder'
 
 # This will let us do thing like `render :xlsx => 'index'`
 # This is similar to how Rails internally implements its :json and :xml renderers
