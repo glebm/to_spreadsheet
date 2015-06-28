@@ -23,16 +23,16 @@ describe ToSpreadsheet::Rule::Format do
 
   context 'local styles' do
     it 'sets column width' do
-      sheet.column_info[0].width.should == 25
+      expect(sheet.column_info[0].width).to eq(25)
     end
     it 'runs lambdas on properties' do
       cell = sheet.rows[1].cells[0]
       styles = sheet.workbook.styles
       font_id = styles.cellXfs[cell.style].fontId
-      styles.fonts[font_id].color.rgb.should == Axlsx::Color.new(rgb: 'cccccc').rgb
+      expect(styles.fonts[font_id].color.rgb).to eq(Axlsx::Color.new(rgb: 'cccccc').rgb)
     end
     it 'runs blocks for selectors' do
-      sheet.name.should == 'Test'
+      expect(sheet.name).to eq('Test')
     end
   end
 end

@@ -20,10 +20,10 @@ HAML
 
   context 'default values' do
     it 'get set when the cell is empty' do
-      row.cells[0].value.should == 100
+      expect(row.cells[0].value).to eq(100)
     end
     it 'does not get set when the cell is not empty' do
-      row.cells[1].value.should == 50
+      expect(row.cells[1].value).to eq(50)
     end
   end
 end

@@ -19,19 +19,19 @@ HAML
 
   context 'data types' do
     it 'num' do
-      row.cells[0].value.should == 20
+      expect(row.cells[0].value).to eq(20)
     end
 
     it 'float' do
-      row.cells[1].type.should be :float
+      expect(row.cells[1].type).to be :float
     end
 
     it 'date' do
-      row.cells[2].type.should be :date
+      expect(row.cells[2].type).to be :date
     end
 
     it 'empty date' do
-      row.cells[3].type.should_not be :date
+      expect(row.cells[3].type).not_to be :date
     end
   end
 end
