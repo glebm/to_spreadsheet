@@ -1,4 +1,4 @@
-require 'active_support/core_ext'
+require 'active_support/core_ext/string'
 module ToSpreadsheet
   module Rule
     def self.make(rule_type, selector_type, selector_value, options)

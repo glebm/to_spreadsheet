@@ -10,7 +10,7 @@ describe ToSpreadsheet::Renderer do
 
   context 'worksheets' do
     it 'are created 1 per <table>' do
-      spreadsheet.workbook.should have(2).worksheets
+      expect(spreadsheet.workbook.worksheets.length).to eq(2)
     end
   end
 end
