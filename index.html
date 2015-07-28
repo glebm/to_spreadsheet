@@ -45,58 +45,53 @@
 
 <p>Add it to your Gemfile:</p>
 
-<pre><code>gem 'to_spreadsheet'
-</code></pre>
+<div class="highlight highlight-ruby"><pre><span class="pl-k">gem</span> <span class="pl-s"><span class="pl-pds">'</span>to_spreadsheet<span class="pl-pds">'</span></span></pre></div>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>In your controller:</p>
+<p>In the controller:</p>
 
-<pre><code># my_thingies_controller.rb
-class MyThingiesController &lt; ApplicationController
-  respond_to :xls, :html
-  def index
-    @my_items = MyItem.all
-    respond_to do |format|
+<div class="highlight highlight-ruby"><pre><span class="pl-c"># my_thingies_controller.rb</span>
+<span class="pl-k">class</span> <span class="pl-en">MyThingiesController<span class="pl-e"> &lt; ApplicationController</span></span>
+  respond_to <span class="pl-c1">:xls</span>, <span class="pl-c1">:html</span>
+  <span class="pl-k">def</span> <span class="pl-en">index</span>
+    <span class="pl-smi">@my_items</span> <span class="pl-k">=</span> <span class="pl-c1">MyItem</span>.all
+    respond_to <span class="pl-k">do </span>|<span class="pl-smi">format</span>|
       format.html 
-      format.xlsx { render xlsx: :index, filename: "my_items_doc" }
-    end
-  end
-end
-</code></pre>
+      format.xlsx { render <span class="pl-c1">xlsx:</span> <span class="pl-c1">:index</span>, <span class="pl-c1">filename:</span> <span class="pl-s"><span class="pl-pds">"</span>my_items_doc<span class="pl-pds">"</span></span> }
+    <span class="pl-k">end</span>
+  <span class="pl-k">end</span>
+<span class="pl-k">end</span></pre></div>
 
-<p>In your view partial:</p>
+<p>In the view partial:</p>
 
-<pre><code># _my_items.haml
-%table
-  %caption My items
-  %thead
-    %tr
-      %td ID
-      %td Name
-  %tbody
-    - my_items.each do |my_item|
-      %tr
-        %td.number= my_item.id
-        %td= my_item.name
-  %tfoot
-    %tr
-      %td(colspan="2") #{my_items.length}
-</code></pre>
+<div class="highlight highlight-haml"><pre># _my_items.haml
+%<span class="pl-ent">table</span>
+  %<span class="pl-ent">caption</span> My items
+  %<span class="pl-ent">thead</span>
+    %<span class="pl-ent">tr</span>
+      %<span class="pl-ent">td</span> ID
+      %<span class="pl-ent">td</span> Name
+  %<span class="pl-ent">tbody</span>
+    -<span class="pl-sre"> my_items.each </span><span class="pl-sre"><span class="pl-k">do</span> |my_item|</span>
+      %<span class="pl-ent">tr</span>
+        %<span class="pl-ent">td</span><span class="pl-ent">.number</span>=<span class="pl-sre"> my_item.id</span>
+        %<span class="pl-ent">td</span>=<span class="pl-sre"> my_item.name</span>
+  %<span class="pl-ent">tfoot</span>
+    %<span class="pl-ent">tr</span>
+      %<span class="pl-ent">td</span>(colspan="2") #{my_items.length}</pre></div>
 
-<p>In your index.xls.haml:</p>
+<p>In the XLSX view:</p>
 
-<pre><code># index.xls.haml
-= render 'my_items', my_items: @my_items
-</code></pre>
+<div class="highlight highlight-haml"><pre># index.xls.haml
+=<span class="pl-sre"> render 'my_items', my_items: @my_items</span></pre></div>
 
-<p>In your index.html.haml:</p>
+<p>In the HTML view:</p>
 
-<pre><code># index.html.haml
-= link_to 'Download spreadsheet', my_items_url(format: :xlsx)
-= render 'my_items', my_items: @my_items
-</code></pre>
+<div class="highlight highlight-haml"><pre># index.html.haml
+=<span class="pl-sre"> link_to 'Download spreadsheet', my_items_url(format: :xlsx)</span>
+=<span class="pl-sre"> render 'my_items', my_items: @my_items</span></pre></div>
 
 <h3>
 <a id="worksheets" class="anchor" href="#worksheets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Worksheets</h3>
@@ -109,17 +104,17 @@ The sheet title will be assigned to the value of the table’s caption element i
 
 <p>You can define formats in your view file (local to the view) or in the initializer</p>
 
-<pre><code>format_xls 'table.my-table' do
-  workbook use_autowidth: true
-  sheet    orientation: landscape
-  format 'th', b: true # bold
-  format 'tbody tr', bg_color: lambda { |row| 'ddffdd' if row.index.odd? }
-  format 'A3:B10', i: true # italic
-  format column: 0, width: 35
-  format 'td.custom', lambda { |cell| modify cell somehow.}
-  # default value (fallback value when value is blank or 0 for integer / float)
-  default 'td.price', 10
-</code></pre>
+<div class="highlight highlight-ruby"><pre>format_xls <span class="pl-s"><span class="pl-pds">'</span>table.my-table<span class="pl-pds">'</span></span> <span class="pl-k">do</span>
+  workbook <span class="pl-c1">use_autowidth:</span> <span class="pl-c1">true</span>
+  sheet    <span class="pl-c1">orientation:</span> landscape
+  format <span class="pl-s"><span class="pl-pds">'</span>th<span class="pl-pds">'</span></span>, <span class="pl-c1">b:</span> <span class="pl-c1">true</span> <span class="pl-c"># bold</span>
+  format <span class="pl-s"><span class="pl-pds">'</span>tbody tr<span class="pl-pds">'</span></span>, <span class="pl-c1">bg_color:</span> lambda { |<span class="pl-smi">row</span>| <span class="pl-s"><span class="pl-pds">'</span>ddffdd<span class="pl-pds">'</span></span> <span class="pl-k">if</span> row.index.odd? }
+  format <span class="pl-s"><span class="pl-pds">'</span>A3:B10<span class="pl-pds">'</span></span>, <span class="pl-c1">i:</span> <span class="pl-c1">true</span> <span class="pl-c"># italic</span>
+  format <span class="pl-c1">column:</span> <span class="pl-c1">0</span>, <span class="pl-c1">width:</span> <span class="pl-c1">35</span>
+  format <span class="pl-s"><span class="pl-pds">'</span>td.custom<span class="pl-pds">'</span></span>, lambda { |<span class="pl-smi">cell</span>| modify cell somehow.}
+  <span class="pl-c"># default value (fallback value when value is blank or 0 for integer / float)</span>
+  default <span class="pl-s"><span class="pl-pds">'</span>td.price<span class="pl-pds">'</span></span>, <span class="pl-c1">10</span>
+<span class="pl-k">end</span></pre></div>
 
 <p>For the full list of supported properties head here: <a href="http://rubydoc.info/github/randym/axlsx/Axlsx/Styles#add_style-instance_method">http://rubydoc.info/github/randym/axlsx/Axlsx/Styles#add_style-instance_method</a>
 In addition, for column formats, Axlsx columnInfo properties are also supported</p>
@@ -154,26 +149,26 @@ In addition, for column formats, Axlsx columnInfo properties are also supported<
 
 <p>For example, to directly manipulate a worksheet:</p>
 
-<pre><code>format_xls do
-  format 'table' do |worksheet|
+<div class="highlight highlight-ruby"><pre>format_xls <span class="pl-k">do</span>
+  format <span class="pl-s"><span class="pl-pds">'</span>table<span class="pl-pds">'</span></span> <span class="pl-k">do </span>|<span class="pl-smi">worksheet</span>|
     worksheet.add_chart ...
-    # to get the associated Nokogiri node:
-    el = context.to_xml_node(worksheet)
-</code></pre>
+    <span class="pl-c"># to get the associated Nokogiri node:</span>
+    el <span class="pl-k">=</span> context.to_xml_node(worksheet)
+  <span class="pl-k">end</span>
+<span class="pl-k">end</span></pre></div>
 
 <h3>
 <a id="themes" class="anchor" href="#themes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Themes</h3>
 
 <p>You can define themes, i.e. blocks of formatting code:</p>
 
-<pre><code>ToSpreadsheet.theme :zebra do
-  format 'tr', bg_color: lambda { |row| 'ddffdd' if row.index.odd? }
-</code></pre>
+<div class="highlight highlight-ruby"><pre><span class="pl-c1">ToSpreadsheet</span>.theme <span class="pl-c1">:zebra</span> <span class="pl-k">do</span>
+  format <span class="pl-s"><span class="pl-pds">'</span>tr<span class="pl-pds">'</span></span>, <span class="pl-c1">bg_color:</span> lambda { |<span class="pl-smi">row</span>| <span class="pl-s"><span class="pl-pds">'</span>ddffdd<span class="pl-pds">'</span></span> <span class="pl-k">if</span> row.index.odd? }
+<span class="pl-k">end</span></pre></div>
 
 <p>And then use them:</p>
 
-<pre><code>format_xls 'table.zebra', ToSpreadsheet.theme(:zebra)
-</code></pre>
+<div class="highlight highlight-ruby"><pre>format_xls <span class="pl-s"><span class="pl-pds">'</span>table.zebra<span class="pl-pds">'</span></span>, <span class="pl-c1">ToSpreadsheet</span>.theme(<span class="pl-c1">:zebra</span>)</pre></div>
 
 <h3>
 <a id="types" class="anchor" href="#types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Types</h3>
