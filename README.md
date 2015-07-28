@@ -1,4 +1,6 @@
-to_spreadsheet is a gem that lets you render xls from your existing slim/haml/erb/etc views from Rails (>= 3.0). [![Build Status](https://secure.travis-ci.org/glebm/to_spreadsheet.png?branch=master)](http://travis-ci.org/glebm/to_spreadsheet)
+# to_spreadsheet
+
+to_spreadsheet lets your Rails 3+ app render Excel files using the existing slim/haml/erb/etc views. [![Build Status](https://secure.travis-ci.org/glebm/to_spreadsheet.png?branch=master)](http://travis-ci.org/glebm/to_spreadsheet)
 
 Installation
 ------------
