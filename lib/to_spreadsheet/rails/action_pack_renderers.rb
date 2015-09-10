@@ -1,6 +1,16 @@
 require 'active_support'
 require 'action_controller/metal/renderers'
-require 'action_controller/responder'
+
+# in rails 3.2  it's ActiveSupport::VERSION
+# in rails 4.0+ it's ActiveSupport.version (instance of Gem::Version)
+if ActiveSupport.respond_to?(:version) && ActiveSupport.version.to_s >= "4.2.0"
+  # For rails 4.2
+  require 'action_controller/responder'
+else
+  # For rails 3.2 - rails 4.1
+  require 'action_controller/metal/responder'
+end
+
 
 # This will let us do thing like `render :xlsx => 'index'`
 # This is similar to how Rails internally implements its :json and :xml renderers
