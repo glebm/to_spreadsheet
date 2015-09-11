@@ -1,8 +1,8 @@
-require "to_spreadsheet/railtie"
+require 'to_spreadsheet/railtie'
 
 describe ToSpreadsheet::Railtie do
 
-  it "should register renderer" do
+  it "registers a renderer" do
     expect(ActionController::Renderers::RENDERERS).to include(:xlsx)
   end
 
