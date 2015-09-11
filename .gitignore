@@ -4,5 +4,6 @@ log/*.log
 pkg/
 *.gem
 Gemfile.lock
+spec/gemfiles/*.lock
 .ruby-version
 .ruby-gemset

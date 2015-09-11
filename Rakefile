@@ -21,3 +21,12 @@ task :write_test_xlsx => :env do
   ToSpreadsheet::Renderer.to_package(html).serialize(path)
   puts "Written to #{path}"
 end
+
+desc "Test all rails versions"
+task :test_all_rails do
+  Dir.glob("./spec/gemfiles/*{[!.lock]}").each do |gemfile|
+    puts "TESTING WITH #{gemfile}"
+    system "BUNDLE_GEMFILE=#{gemfile} bundle | grep Installing"
+    system "BUNDLE_GEMFILE=#{gemfile} bundle exec rspec"
+  end
+end
