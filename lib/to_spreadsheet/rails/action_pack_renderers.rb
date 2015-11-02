@@ -14,13 +14,13 @@ end
 
 # This will let us do thing like `render :xlsx => 'index'`
 # This is similar to how Rails internally implements its :json and :xml renderers
-ActionController::Renderers.add :xlsx do |template, options|
+ActionController::Renderers.add ToSpreadsheet.renderer do |template, options|
   filename = options[:filename] || options[:template] || 'data'
   data = ToSpreadsheet::Context.with_context ToSpreadsheet::Context.global.merge(ToSpreadsheet::Context.new) do |context|
     html = render_to_string(template, options.merge(template: template.to_s, formats: ['xlsx', 'html']))
     ToSpreadsheet::Renderer.to_data(html, context)
   end
-  send_data data, type: :xlsx, disposition: %(attachment; filename="#{filename}.xlsx")
+  send_data data, type: ToSpreadsheet.renderer, disposition: %(attachment; filename="#{filename}.xlsx")
 end
 
 class ActionController::Responder
@@ -28,7 +28,7 @@ class ActionController::Responder
   # respond_to do |format|
   #   format.xlsx
   # end
-  def to_xlsx
-    controller.render xlsx: controller.action_name
+  define_method "to_#{ToSpreadsheet.renderer}" do
+    controller.render ToSpreadsheet.renderer => controller.action_name
   end
 end

@@ -1,6 +1,10 @@
 ENV["RAKE_ENV"] ||= 'test'
 $: << File.expand_path('../lib', __FILE__)
+require 'combustion'
 require 'to_spreadsheet'
+Combustion.initialize! :action_view, :action_controller do
+  config.to_spreadsheet.renderer = :html2xlsx
+end
 require 'haml'
 
 module TestRendering
