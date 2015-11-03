@@ -21,7 +21,7 @@ class MyThingiesController < ApplicationController
   def index
     @my_items = MyItem.all
     respond_to do |format|
-      format.html 
+      format.html
       format.xlsx { render xlsx: :index, filename: "my_items_doc" }
     end
   end
@@ -119,6 +119,20 @@ end
 And then use them:
 ```ruby
 format_xls 'table.zebra', ToSpreadsheet.theme(:zebra)
+```
+
+### Using along side axlsx-rails
+If you are using [axlsx-rails](https://github.com/straydogstudio/axlsx_rails), :xlsx renderer might have already been defined. In that case define a custome renderer using
+```ruby
+# app/config/application.rb
+config.to_spreadsheet.renderer = :html2xlsx
+```
+
+And then in controller
+```ruby
+respond_to do |format|
+  format.html2xlsx
+end
 ```
 
 ### Types

@@ -34,4 +34,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'responders'
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'combustion'
 end
