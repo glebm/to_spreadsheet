@@ -1,3 +1,5 @@
+require 'chronic'
+
 module ToSpreadsheet::Themes
   module Default
     ::ToSpreadsheet.theme :default do
