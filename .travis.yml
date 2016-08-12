@@ -1,6 +1,8 @@
 language: ruby
 cache: bundler
 bundler_args: --path ../../vendor/bundle
+before_install:
+  - gem update bundler
 rvm:
   - 2.2.2
   - 1.9.3
