@@ -1,12 +1,9 @@
 language: ruby
 cache: bundler
 bundler_args: --path ../../vendor/bundle
-before_install:
-  - gem update bundler
 rvm:
-  - 2.2.2
-  - 1.9.3
-  - jruby
+  - 2.3.1
+  - jruby-9000
 gemfile:
   - spec/gemfiles/Gemfile.rails-3.2
   - spec/gemfiles/Gemfile.rails-4.0
