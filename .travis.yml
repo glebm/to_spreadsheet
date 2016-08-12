@@ -11,3 +11,8 @@ gemfile:
   - spec/gemfiles/Gemfile.rails-4.2
   - Gemfile
 script: bundle exec rspec
+
+matrix:
+  exclude:
+  - rvm: jruby-9000
+    gemfile: Gemfile
