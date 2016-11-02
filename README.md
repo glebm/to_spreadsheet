@@ -17,7 +17,7 @@ In the controller:
 ```ruby
 # my_thingies_controller.rb
 class MyThingiesController < ApplicationController
-  respond_to :xls, :html
+  respond_to :xlsx, :html
   def index
     @my_items = MyItem.all
     respond_to do |format|
@@ -49,7 +49,7 @@ In the view partial:
 
 In the XLSX view:
 ```haml
-# index.xls.haml
+# index.xlsx.haml
 = render 'my_items', my_items: @my_items
 ```
 
