@@ -18,7 +18,7 @@ module ToSpreadsheet
             sheet.col_style selector_query, inline_styles if inline_styles.present?
             apply_col_info sheet.column_info[selector_query]
           when :range
-            add_and_apply_style wb, range_match(selector_type, sheet), context
+            add_and_apply_style wb, range_match(selector_query, sheet), context
         end
       end
 
