@@ -17,7 +17,7 @@ end
 ActionController::Renderers.add ToSpreadsheet.renderer do |template, options|
   filename = options[:filename] || options[:template] || 'data'
   data = ToSpreadsheet::Context.with_context ToSpreadsheet::Context.global.merge(ToSpreadsheet::Context.new) do |context|
-    html = render_to_string(template, options.merge(template: template.to_s, formats: ['xlsx', 'html']))
+    html = render_to_string(template, options.merge(template: template.to_s, formats: [:xlsx, :html]))
     ToSpreadsheet::Renderer.to_data(html, context)
   end
   send_data data, type: ToSpreadsheet.renderer, disposition: %(attachment; filename="#{filename}.xlsx")

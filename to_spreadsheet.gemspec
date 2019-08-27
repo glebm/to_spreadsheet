@@ -25,7 +25,6 @@ Gem::Specification.new do |s|
   s.files             = include_files - exclude_files
   s.require_path      = "lib"
   s.test_files        = Dir["spec/**/*_spec.rb"]
-  s.has_rdoc          = true
   s.extra_rdoc_files  = Dir["README*"]
   s.add_dependency 'rails'
   s.add_dependency 'nokogiri'
