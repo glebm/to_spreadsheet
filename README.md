@@ -74,7 +74,7 @@ format_xls 'table.my-table' do
   workbook use_autowidth: true
   sheet    orientation: landscape
   format 'th', b: true # bold
-  format 'tbody tr', bg_color: lambda { |row| 'ddffdd' if row.index.odd? }
+  format 'tbody tr', bg_color: lambda { |row| 'ddffdd' if row.row_index.odd? }
   format 'A3:B10', i: true # italic
   format column: 0, width: 35
   format 'td.custom', lambda { |cell| modify cell somehow.}
@@ -112,7 +112,7 @@ end
 You can define themes, i.e. blocks of formatting code:
 ```ruby
 ToSpreadsheet.theme :zebra do
-  format 'tr', bg_color: lambda { |row| 'ddffdd' if row.index.odd? }
+  format 'tr', bg_color: lambda { |row| 'ddffdd' if row.row_index.odd? }
 end
 ```
 

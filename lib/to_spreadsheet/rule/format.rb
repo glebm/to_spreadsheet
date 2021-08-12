@@ -8,7 +8,7 @@ module ToSpreadsheet
         wb = sheet.workbook
         case selector_type
           when :css
-            css_match selector_query, context.to_xml_node(sheet) do |xml_node|
+            css_match selector_query, context.to_xml_node(sheet) do |xml_node| 
               add_and_apply_style wb, context, context.to_xls_entity(xml_node)
             end
           when :row

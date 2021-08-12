@@ -6,7 +6,7 @@ describe ToSpreadsheet::Rule::Format do
 :ruby
   format_xls do
     format column: 0, width: 25
-    format 'tr', fg_color: lambda { |row| 'cccccc' if row.index.odd? }
+    format 'tr', fg_color: lambda { |row| 'cccccc' if row.row_index.odd? }
     format 'table' do |ws|
       ws.name = 'Test'
     end
