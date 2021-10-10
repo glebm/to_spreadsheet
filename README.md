@@ -77,7 +77,7 @@ format_xls 'table.my-table' do
   format 'tbody tr', bg_color: lambda { |row| 'ddffdd' if row.row_index.odd? }
   format 'A3:B10', i: true # italic
   format column: 0, width: 35
-  format 'td.custom', lambda { |cell| modify cell somehow.}
+  format 'td.custom', lambda { |cell| '<modify cell somehow>'}
   # default value (fallback value when value is blank or 0 for integer / float)
   default 'td.price', 10
 end
